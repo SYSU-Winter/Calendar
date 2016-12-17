@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.a12136.calender.MainActivity"
+    tools:context="com.example.a12136.calendar.MainActivity"
     tools:showIn="@layout/activity_main">
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="65dip"
             android:background="@drawable/action_bar_bg"
             android:orientation="horizontal">
 
@@ -56,6 +56,18 @@
                     android:textColor="#80ffffff"
                     android:textSize="12sp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/now_circle_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15"
+                android:textSize="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="#fffffe"
+                android:background="@mipmap/locate"/>
 
             <LinearLayout
                 android:layout_width="80dip"
@@ -171,26 +183,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#F7F7F7"
-                android:paddingStart="15dip"
-                android:paddingEnd="10dip"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="10dp"/>
 
             <SlidingDrawer
                 android:id="@+id/sildingDrawer"
                 android:layout_width="fill_parent"
-                android:layout_height="200dip"
+                android:layout_height="200dp"
                 android:layout_alignBottom="@+id/viewpager"
                 android:content="@+id/contentText"
                 android:handle="@+id/handlerText"
-                android:orientation="vertical"
-
-                >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/handlerText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#fffffe"
-                    android:minHeight="140dip"
+                    android:minHeight="200dp"
                     android:orientation="vertical">
 
                     <View
@@ -221,48 +231,5 @@
                     android:background="#fffffe"/>
 
             </SlidingDrawer>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="60dip"
-            android:background="@drawable/bottom_bar_bg">
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_alignParentTop="true"
-                android:background="#20000000"/>
-
-            <TextView
-                android:id="@+id/now_circle_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/circle"
-                android:gravity="center"
-                android:text="今" />
-
-            <TextView
-                android:id="@+id/subscibe_circle_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:layout_toStartOf="@id/now_circle_view"
-                android:background="@drawable/circle"
-                android:gravity="center"
-                android:text="订" />
-
-            <TextView
-                android:id="@+id/add_circle_view"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:layout_toEndOf="@id/now_circle_view"
-                android:background="@drawable/circle"
-                android:text="＋"
-                android:gravity="center"/>
         </RelativeLayout>
 </LinearLayout>

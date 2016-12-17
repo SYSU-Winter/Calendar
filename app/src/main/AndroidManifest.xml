@@ -20,8 +20,10 @@
         </activity>
         <activity
             android:name=".AddPlanActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@style/Theme.AppCompat.Light">
         </activity>
+        <receiver android:name=".AlarmReceiver" android:process=":remote">
+        </receiver>
     </application>
 
 </manifest>

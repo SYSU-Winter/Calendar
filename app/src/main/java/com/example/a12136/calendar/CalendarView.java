@@ -43,7 +43,7 @@ public class CalendarView extends View {
 
         void clickDate(CustomDate date);//回调点击的日期
 
-        void onMesureCellHeight(int cellSpace);// 回调cell的高度确定slidingDrawer高度
+        void onMeasureCellHeight(int cellSpace);// 回调cell的高度确定slidingDrawer高度
 
         void changeDate(CustomDate date);//回调滑动viewPager改变的日期
     }
@@ -51,13 +51,11 @@ public class CalendarView extends View {
     public CalendarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
-
     }
 
     public CalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-
     }
 
     public CalendarView(Context context) {
@@ -88,7 +86,6 @@ public class CalendarView extends View {
         mCirclePaint.setColor(Color.parseColor("#F24949"));
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initDate();
-
     }
 
     private void initDate() {
@@ -107,7 +104,7 @@ public class CalendarView extends View {
         mViewHight = h;
         mCellSpace = Math.min(mViewHight / TOTAL_ROW, mViewWidth / TOTAL_COL);
         if (!callBackCellSpace) {
-            mCallBack.onMesureCellHeight(mCellSpace);
+            mCallBack.onMeasureCellHeight(mCellSpace);
             callBackCellSpace = true;
         }
         mTextPaint.setTextSize(mCellSpace / 3);
