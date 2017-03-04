@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_edit_dialog">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#fffffe"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/plan_content_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="52dip"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:layout_marginTop="12dip"
+            android:background="@drawable/edit_text_bg"
+            android:gravity="center_vertical"
+            android:hint="活动内容"
+            android:paddingStart="8dip"
+            android:paddingEnd="8dip"
+            android:textSize="16sp" />
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="52dip"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:background="@drawable/shape_no_corner_without_bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dip"
+                android:gravity="center"
+                android:text="开始时间"
+                android:textColor="#cc000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/start_plan_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dip"
+                android:gravity="center"
+                android:text="11:11"
+                android:textColor="#80000000"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="52dip"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:background="@drawable/shape_bottom_corner_no_top_line">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dip"
+                android:gravity="center"
+                android:text="结束时间"
+                android:textColor="#cc000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_plan_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dip"
+                android:gravity="center"
+                android:text="22:22"
+                android:textColor="#80000000"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/activity_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+        <!--<TextView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="40dip"-->
+        <!--android:layout_marginLeft="12dip"-->
+        <!--android:layout_marginRight="12dip"-->
+        <!--android:layout_marginTop="24dip"-->
+        <!--android:background="@drawable/edit_text_bg"-->
+        <!--android:gravity="center"-->
+        <!--android:text="更多选项"-->
+        <!--android:textColor="#cc000000"-->
+        <!--android:textSize="16sp" />-->
+    </LinearLayout>
+
+</LinearLayout>

@@ -31,4 +31,19 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@mipmap/add" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="15dp"
+        android:src="@mipmap/weather"
+        android:textAllCaps="false"
+        android:visibility="invisible"
+        app:backgroundTint="#4169E1"
+        app:borderWidth="0dp"
+        app:rippleColor="#a6a6a6" />
+
 </android.support.design.widget.CoordinatorLayout>

@@ -3,16 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/dialog_show_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#80000000"
-        android:visibility="gone">
-
-        <include layout="@layout/comp_dialog_layout" />
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -72,39 +62,13 @@
                 android:background="@drawable/edit_text_bg"
                 android:gravity="center_vertical"
                 android:hint="活动内容"
-                android:paddingStart="8dip"
                 android:paddingEnd="8dip"
+                android:paddingStart="8dip"
                 android:textSize="16sp" />
 
-            <!--<RelativeLayout-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="52dip"-->
-                <!--android:layout_marginLeft="12dip"-->
-                <!--android:layout_marginRight="12dip"-->
-                <!--android:layout_marginTop="16dip"-->
-                <!--android:background="@drawable/shape_top_corner_no_bottom_line">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="fill_parent"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:layout_marginStart="8dip"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="全天事件"-->
-                    <!--android:textColor="#cc000000"-->
-                    <!--android:textSize="16sp" />-->
-
-                <!--<Switch-->
-                    <!--android:id="@+id/checkbox"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_gravity="end|center"-->
-                    <!--android:layout_marginEnd="8dip" />-->
-            <!--</RelativeLayout>-->
 
             <RelativeLayout
+                android:id="@+id/starting"
                 android:layout_width="fill_parent"
                 android:layout_height="52dip"
                 android:layout_marginLeft="12dip"
@@ -134,6 +98,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/ending"
                 android:layout_width="fill_parent"
                 android:layout_height="52dip"
                 android:layout_marginLeft="12dip"
@@ -164,16 +129,16 @@
             </RelativeLayout>
 
             <!--<TextView-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="40dip"-->
-                <!--android:layout_marginLeft="12dip"-->
-                <!--android:layout_marginRight="12dip"-->
-                <!--android:layout_marginTop="24dip"-->
-                <!--android:background="@drawable/edit_text_bg"-->
-                <!--android:gravity="center"-->
-                <!--android:text="更多选项"-->
-                <!--android:textColor="#cc000000"-->
-                <!--android:textSize="16sp" />-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="40dip"-->
+            <!--android:layout_marginLeft="12dip"-->
+            <!--android:layout_marginRight="12dip"-->
+            <!--android:layout_marginTop="24dip"-->
+            <!--android:background="@drawable/edit_text_bg"-->
+            <!--android:gravity="center"-->
+            <!--android:text="更多选项"-->
+            <!--android:textColor="#cc000000"-->
+            <!--android:textSize="16sp" />-->
         </LinearLayout>
     </LinearLayout>
 

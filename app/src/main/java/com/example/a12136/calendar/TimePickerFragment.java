@@ -6,11 +6,13 @@ package com.example.a12136.calendar;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 import android.app.DialogFragment;
 import android.app.Dialog;
@@ -19,9 +21,6 @@ import android.widget.TimePicker;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
-    private boolean startTimeOrEndTime;
-    private AddPlanActivity context;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         //Use the current time as the default values for the time picker
@@ -29,8 +28,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        context = (AddPlanActivity) getActivity();
-        startTimeOrEndTime = context.setStartTimeOrEndTime;
 
         //Create and return a new instance of TimePickerDialog
         /*
@@ -54,7 +51,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         /*.........Set a custom title for picker........*/
         TextView tvTitle = new TextView(getActivity());
 
-        if (startTimeOrEndTime) {
+        if (getTag().contains("start")) {
             tvTitle.setText("开始时间");
         } else {
             tvTitle.setText("结束时间");
@@ -70,20 +67,36 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     //onTimeSet() callback method
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+    public void onTimeSet(TimePicker view, int hourOfDay, int minuteOfHour){
         //Do something with the user chosen time
         //Get reference of host activity (XML Layout File) TextView widget
 
-        //select startTime
-        if (startTimeOrEndTime) {
-            TextView tv = (TextView) context.findViewById(R.id.start_plan_time_tv);
-            tv.setText(String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+        String hour, minute;
+        if (hourOfDay < 10) {
+            hour = "0"+hourOfDay;
+        } else {
+            hour = ""+hourOfDay;
         }
-        //select endTime
-        else {
-            TextView tv = (TextView) context.findViewById(R.id.end_plan_time_tv);
-            tv.setText(String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+        if (minuteOfHour < 10) {
+            minute = "0"+minuteOfHour;
+        } else {
+            minute = ""+minuteOfHour;
         }
+        TextView tv;
+        if (getTag()=="add-start") {
+            tv = (TextView) getActivity().findViewById(R.id.start_plan_time_tv);
+        } else if (getTag()=="add-end"){
+            tv = (TextView) getActivity().findViewById(R.id.end_plan_time_tv);
+        } else if (getTag()=="main-start") {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            tv = (TextView) mainActivity.layout.findViewById(R.id.start_plan_time_tv);
+        } else if (getTag()=="main-end") {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            tv = (TextView) mainActivity.layout.findViewById(R.id.end_plan_time_tv);
+        } else {
+            tv = new TextView(getActivity());
+        }
+        tv.setText(hour + ":" + minute);
 
     }
 }

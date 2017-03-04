@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +29,10 @@ public class AddPlanActivity extends Activity implements View.OnClickListener {
     private TextView mPlanContentTv;
     private TextView mStartPlanTimeTv;
     private TextView mEndPlanTimeTv;
+
+    private RelativeLayout re_start;
+    private RelativeLayout re_end;
+
     private TextView mNoCancelPlanTv;
     private TextView mConfirmCancelPlanTv;
     private View mShowDialogLayout;
@@ -52,9 +57,12 @@ public class AddPlanActivity extends Activity implements View.OnClickListener {
         mPlanContentTv = (TextView)this.findViewById(R.id.plan_content_tv);
         mStartPlanTimeTv = (TextView)this.findViewById(R.id.start_plan_time_tv);
         mEndPlanTimeTv = (TextView)this.findViewById(R.id.end_plan_time_tv);
+
+        re_start = (RelativeLayout)this.findViewById(R.id.starting);
+        re_end = (RelativeLayout)this.findViewById(R.id.ending);
+
         mNoCancelPlanTv = (TextView)this.findViewById(R.id.no_cancel_plan_tv);
         mConfirmCancelPlanTv = (TextView)this.findViewById(R.id.confirm_cancel_plan_tv);
-        mShowDialogLayout = this.findViewById(R.id.dialog_show_layout);
         mCancelDialogLayout = this.findViewById(R.id.cancel_dialog_layout);
         setOnClickListener();
     }
@@ -85,7 +93,7 @@ public class AddPlanActivity extends Activity implements View.OnClickListener {
                 } else {
                     CustomDate currentDate =(CustomDate) getIntent().getSerializableExtra(MainActivity.MAIN_ACTIVITY_CLICK_DATE);
                     String currentDate_str = currentDate.toString();
-                    //插入数据
+                    //插入或更新数据
                     db.insert2DB(mPlanContentTv.getText().toString(), currentDate_str,
                             mStartPlanTimeTv.getText().toString(), mEndPlanTimeTv.getText().toString());
 //                    //设置提醒功能
@@ -115,20 +123,20 @@ public class AddPlanActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        mStartPlanTimeTv.setOnClickListener(new View.OnClickListener() {
+        re_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getFragmentManager(),"TimePicker");
+                newFragment.show(getFragmentManager(),"add-start");
                 setStartTimeOrEndTime = true;
             }
         });
 
-        mEndPlanTimeTv.setOnClickListener(new View.OnClickListener() {
+        re_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getFragmentManager(),"TimePicker");
+                newFragment.show(getFragmentManager(),"add-end");
                 setStartTimeOrEndTime = false;
             }
         });
@@ -159,7 +167,7 @@ public class AddPlanActivity extends Activity implements View.OnClickListener {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void showCancelDialog() {
+    public void showCancelDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);  //先得到构造器
         builder.setTitle("提示"); //设置标题
         builder.setMessage("是否退出设置?"); //内容

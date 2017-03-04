@@ -17,6 +17,7 @@ import android.view.ViewConfiguration;
 public class CalendarView extends View {
 
     private static final String TAG = "CalendarView";
+
     /**
      * 两种模式 （月份和星期）
      */
@@ -80,10 +81,14 @@ public class CalendarView extends View {
     }
 
     private void init(Context context) {
+        // Paint.ANTI_ALIAS_FLAG用于绘制时抗锯齿
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStyle(Paint.Style.FILL);
         mCirclePaint.setColor(Color.parseColor("#F24949"));
+
+        //touchSlop获得的是触发移动事件的最短距离，如果小于这个距离就不触发移动控件
+        // 用这个距离来判断用户是否翻页
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         initDate();
     }
@@ -113,6 +118,7 @@ public class CalendarView extends View {
     private Cell mClickCell;
     private float mDownX;
     private float mDownY;
+
     /*
      *
      * 触摸事件为了确定点击的位置日期
@@ -120,11 +126,13 @@ public class CalendarView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN:// 手指按下
                 mDownX = event.getX();
                 mDownY = event.getY();
                 break;
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_UP:// 手指抬起
+                // 根据滑动时手指按下和抬起的距离来和翻页触发距离比较
+                // 小于的时候就是点击
                 float disX = event.getX() - mDownX;
                 float disY = event.getY() - mDownY;
                 if (Math.abs(disX) < touchSlop && Math.abs(disY) < touchSlop) {
@@ -137,13 +145,17 @@ public class CalendarView extends View {
         return true;
     }
 
+    // 对点击事件处理
     private void measureClickCell(int col, int row) {
+        System.out.println("col = " + col + "   row = " + row);
         if (col >= TOTAL_COL || row >= TOTAL_ROW)
             return;
         if (mClickCell != null) {
+            System.out.println("mClickCell.i = " + mClickCell.i + "   mClickCell.j = " + mClickCell.j);
             rows[mClickCell.j].cells[mClickCell.i] = mClickCell;
         }
         if (rows[row] != null) {
+            //rows[mClickCell.j].cells[mClickCell.i] = mClickCell;
             mClickCell = new Cell(rows[row].cells[col].date,
                     rows[row].cells[col].state, rows[row].cells[col].i,
                     rows[row].cells[col].j);
@@ -151,6 +163,7 @@ public class CalendarView extends View {
             CustomDate date = rows[row].cells[col].date;
             date.week = col;
             mCallBack.clickDate(date);
+            // 请求重绘视图，刷新view
             invalidate();
         }
     }
@@ -189,22 +202,29 @@ public class CalendarView extends View {
             this.j = j;
         }
 
-
-        // 绘制一个单元格 如果颜色需要自定义可以修改
+        // 绘制一个单元格 颜色自定义
         public void drawSelf(Canvas canvas) {
             switch (state) {
                 case CURRENT_MONTH_DAY:
                     mTextPaint.setColor(Color.parseColor("#80000000"));
                     break;
+                // 如果 不是当前月，那么字体颜色设置的浅一些，和当前月区别出来
                 case NEXT_MONTH_DAY:
                 case PAST_MONTH_DAY:
                     mTextPaint.setColor(Color.parseColor("#40000000"));
                     break;
+                // 今天的日期有红圈，这样不管点到哪里都知道今天在哪里
                 case TODAY:
-                    mTextPaint.setColor(Color.parseColor("#F24949"));
+                    mTextPaint.setColor(Color.parseColor("#fffffe"));
+                    mCirclePaint.setColor(Color.parseColor("#F24949"));
+                    canvas.drawCircle((float) (mCellSpace * (i + 0.5)),
+                            (float) ((j + 0.5) * mCellSpace), mCellSpace / 2,
+                            mCirclePaint);
                     break;
+                // 点击选中的日期时，字体颜色变成白色
                 case CLICK_DAY:
                     mTextPaint.setColor(Color.parseColor("#fffffe"));
+                    mCirclePaint.setColor(Color.parseColor("#40000000"));
                     canvas.drawCircle((float) (mCellSpace * (i + 0.5)),
                             (float) ((j + 0.5) * mCellSpace), mCellSpace / 2,
                             mCirclePaint);
@@ -212,6 +232,7 @@ public class CalendarView extends View {
             }
             // 绘制文字
             String content = date.day+"";
+            //System.out.println("date.day = " + content);
             canvas.drawText(content,
                     (float) ((i+0.5) * mCellSpace - mTextPaint.measureText(content)/2),
                     (float) ((j + 0.7) * mCellSpace - mTextPaint.measureText(
@@ -220,13 +241,12 @@ public class CalendarView extends View {
     }
     /**
      *
-     * @author huang
      * cell的state
      *当前月日期，过去的月的日期，下个月的日期，今天，点击的日期
      *
      */
     enum State {
-        CURRENT_MONTH_DAY, PAST_MONTH_DAY, NEXT_MONTH_DAY, TODAY, CLICK_DAY;
+        CURRENT_MONTH_DAY, PAST_MONTH_DAY, NEXT_MONTH_DAY, TODAY, CLICK_DAY
     }
 
     /**
@@ -241,33 +261,40 @@ public class CalendarView extends View {
         mCallBack.changeDate(mShowDate);
     }
 
-    /**
-     * 填充星期模式下的数据 默认通过当前日期得到所在星期天的日期，然后依次填充日期
-     */
+    // 填充周模式下的数据
     private void fillWeekDate() {
+        // 上一个月的天数
         int lastMonthDays = DateUtil.getMonthDays(mShowDate.year, mShowDate.month-1);
         rows[0] = new Row(0);
+        // 这里的day是下一个星期天
         int day = mShowDate.day;
+        // 从后往前填充7天
         for (int i = TOTAL_COL -1; i >= 0 ; i--) {
             day -= 1;
+            // 当回到一个月的第一天后还需要继续填充的话啊就需要变成上一个月的最后一天的日期
             if (day < 1) {
                 day = lastMonthDays;
             }
-            CustomDate date = CustomDate.modifiDayForObject(mShowDate, day);
+            // 获取修正后的日期，也就是改变了日
+            CustomDate date = CustomDate.modifyDayForObject(mShowDate, day);
+            // 如果当前待填充的日期就是今天，则重绘一下今天的图形
             if (DateUtil.isToday(date)) {
                 mClickCell = new Cell(date, State.TODAY, i, 0);
+                //System.out.println("i = " + i);
                 date.week = i;
                 mCallBack.clickDate(date);
-                rows[0].cells[i] =  new Cell(date, State.CLICK_DAY, i, 0);
+                rows[0].cells[i] = new Cell(date, State.TODAY, i, 0);
                 continue;
+            } else {
+                mClickCell = null;
             }
+            // 填充，在周视图下默认都是当前月，不做区分
             rows[0].cells[i] = new Cell(date, State.CURRENT_MONTH_DAY,i, 0);
         }
     }
 
     /**
      * 填充月份模式下数据 通过getWeekDayFromDate得到一个月第一天是星期几就可以算出所有的日期的位置 然后依次填充
-     * 这里最好重构一下
      */
     private void fillMonthDate() {
         int monthDay = DateUtil.getCurrentMonthDay();
@@ -282,24 +309,26 @@ public class CalendarView extends View {
         for (int j = 0; j < TOTAL_ROW; j++) {
             rows[j] = new Row(j);
             for (int i = 0; i < TOTAL_COL; i++) {
-                int postion = i + j * TOTAL_COL;
-                if (postion >= firstDayWeek
-                        && postion < firstDayWeek + currentMonthDays) {
+                int position = i + j * TOTAL_COL;
+                if (position >= firstDayWeek
+                        && position < firstDayWeek + currentMonthDays) {
                     day++;
                     if (isCurrentMonth && day == monthDay) {
-                        CustomDate date = CustomDate.modifiDayForObject(mShowDate, day);
+                        CustomDate date = CustomDate.modifyDayForObject(mShowDate, day);
                         mClickCell = new Cell(date,State.TODAY, i,j);
                         date.week = i;
                         mCallBack.clickDate(date);
-                        rows[j].cells[i] = new Cell(date,State.CLICK_DAY, i,j);
+                        rows[j].cells[i] = new Cell(date,State.TODAY, i,j);
                         continue;
+                    } else {
+                        mClickCell = null;
                     }
-                    rows[j].cells[i] = new Cell(CustomDate.modifiDayForObject(mShowDate, day),
+                    rows[j].cells[i] = new Cell(CustomDate.modifyDayForObject(mShowDate, day),
                             State.CURRENT_MONTH_DAY, i, j);
-                } else if (postion < firstDayWeek) {
-                    rows[j].cells[i] = new Cell(new CustomDate(mShowDate.year, mShowDate.month-1, lastMonthDays - (firstDayWeek- postion - 1)), State.PAST_MONTH_DAY, i, j);
-                } else if (postion >= firstDayWeek + currentMonthDays) {
-                    rows[j].cells[i] = new Cell((new CustomDate(mShowDate.year, mShowDate.month+1, postion - firstDayWeek - currentMonthDays + 1)), State.NEXT_MONTH_DAY, i, j);
+                } else if (position < firstDayWeek) {
+                    rows[j].cells[i] = new Cell(new CustomDate(mShowDate.year, mShowDate.month-1, lastMonthDays - (firstDayWeek- position - 1)), State.PAST_MONTH_DAY, i, j);
+                } else if (position >= firstDayWeek + currentMonthDays) {
+                    rows[j].cells[i] = new Cell((new CustomDate(mShowDate.year, mShowDate.month+1, position - firstDayWeek - currentMonthDays + 1)), State.NEXT_MONTH_DAY, i, j);
                 }
             }
         }
@@ -307,11 +336,13 @@ public class CalendarView extends View {
 
     public void update() {
         fillDate();
+        // 请求重绘视图，刷新view
         invalidate();
     }
 
     public void backToday(){
         initDate();
+        // 请求重绘视图，刷新view
         invalidate();
     }
     //切换style
@@ -324,22 +355,19 @@ public class CalendarView extends View {
                     mShowDate.month);
             int day =  1 + WEEK - firstDayWeek;
             mShowDate.day = day;
-
             update();
         }
 
     }
-    //向右滑动
+    //向右滑动, 重新计算标题栏的日期显示
     public void rightSilde() {
         if (style == MONTH_STYLE) {
-
             if (mShowDate.month == 12) {
                 mShowDate.month = 1;
                 mShowDate.year += 1;
             } else {
                 mShowDate.month += 1;
             }
-
         } else if (style == WEEK_STYLE) {
             int currentMonthDays = DateUtil.getMonthDays(mShowDate.year, mShowDate.month);
             if (mShowDate.day + WEEK > currentMonthDays) {
@@ -352,12 +380,11 @@ public class CalendarView extends View {
                 mShowDate.day = WEEK - currentMonthDays + mShowDate.day;
             }else{
                 mShowDate.day += WEEK;
-
             }
         }
         update();
     }
-    //向左滑动
+    //向左滑动, 重新计算标题栏的日期显示
     public void leftSilde() {
 
         if (style == MONTH_STYLE) {

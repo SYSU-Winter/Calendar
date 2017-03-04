@@ -10,226 +10,352 @@
     tools:context="com.example.a12136.calendar.MainActivity"
     tools:showIn="@layout/activity_main">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="65dip"
-            android:background="@drawable/action_bar_bg"
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="65dip"
+        android:background="@drawable/action_bar_bg"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/show_month_view"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="10dip"
+            android:layout_marginStart="15dip"
+            android:gravity="center"
+            android:text="12月"
+            android:textColor="#fffffe"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toEndOf="@id/show_month_view"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/show_week_view"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="bottom|start"
+                android:paddingBottom="1dip"
+                android:text="周四"
+                android:textColor="#80ffffff"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/show_year_view"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="top|start"
+                android:paddingTop="1dip"
+                android:text="2016"
+                android:textColor="#80ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/now_circle_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/locate"
+            android:gravity="center"
+            android:text="15"
+            android:textColor="#fffffe"
+            android:textSize="24dp" />
+
+        <LinearLayout
+            android:layout_width="80dip"
+            android:layout_height="25dip"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dip"
+            android:background="@drawable/select_view_bg"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/show_month_view"
+                android:id="@+id/month_calendar_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="15dip"
-                android:layout_marginEnd="10dip"
+                android:layout_weight="1"
+                android:clickable="@drawable/press_left_text_bg"
                 android:gravity="center"
-                android:text="12月"
-                android:textColor="#fffffe"
-                android:textSize="24sp" />
+                android:text="月"
+                android:textColor="#ffffff" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="1px"
                 android:layout_height="fill_parent"
-                android:layout_toEndOf="@id/show_month_view"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/show_week_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="bottom|start"
-                    android:paddingBottom="1dip"
-                    android:text="周四"
-                    android:textColor="#80ffffff"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/show_year_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="top|start"
-                    android:paddingTop="1dip"
-                    android:text="2016"
-                    android:textColor="#80ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                android:background="#80ffffff"
+                android:textColor="#ffffff" />
 
             <TextView
-                android:id="@+id/now_circle_view"
+                android:id="@+id/week_calendar_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
-                android:textSize="24dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:clickable="@drawable/press_right_text_bg"
                 android:gravity="center"
-                android:textColor="#fffffe"
-                android:background="@mipmap/locate"/>
+                android:text="周"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="80dip"
-                android:layout_height="25dip"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dip"
-                android:background="@drawable/select_view_bg"
-                android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fffffe"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
 
-                <TextView
-                    android:id="@+id/month_calendar_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:clickable="@drawable/press_left_text_bg"
-                    android:gravity="center"
-                    android:text="月"
-                    android:textColor="#ffffff" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#20000000" />
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="fill_parent"
-                    android:background="#80ffffff"
-                    android:textColor="#ffffff" />
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:layout_marginBottom="2dip"
+            android:layout_marginTop="2dip">
+
+            <TableRow>
 
                 <TextView
-                    android:id="@+id/week_calendar_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:clickable="@drawable/press_right_text_bg"
-                    android:gravity="center"
-                    android:text="周"
-                    android:textColor="#ffffff" />
-            </LinearLayout>
-        </RelativeLayout>
+                    style="@style/dateStyle"
+                    android:text="日"
+                    android:textColor="@color/date_1" />
 
-        <LinearLayout
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="一"
+                    android:textColor="@color/date_2" />
+
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="二"
+                    android:textColor="@color/date_2" />
+
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="三"
+                    android:textColor="@color/date_2" />
+
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="四"
+                    android:textColor="@color/date_2" />
+
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="五"
+                    android:textColor="@color/date_2" />
+
+                <TextView
+                    style="@style/dateStyle"
+                    android:text="六"
+                    android:textColor="@color/date_1" />
+            </TableRow>
+        </TableLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#20000000" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/contentPager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fffffe">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#fffffe"
-            android:orientation="vertical"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip">
+            android:layout_gravity="center"
+            android:background="#F7F7F7"
+            android:paddingEnd="10dp"
+            android:paddingStart="15dp" />
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#20000000"/>
-
-            <TableLayout
-                android:layout_width="fill_parent"
-                android:layout_height="20dip"
-                android:layout_marginBottom="2dip"
-                android:layout_marginTop="2dip">
-
-                <TableRow>
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="日"
-                        android:textColor="@color/date_1" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="一"
-                        android:textColor="@color/date_2" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="二"
-                        android:textColor="@color/date_2" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="三"
-                        android:textColor="@color/date_2" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="四"
-                        android:textColor="@color/date_2" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="五"
-                        android:textColor="@color/date_2" />
-
-                    <TextView
-                        style="@style/dateStyle"
-                        android:text="六"
-                        android:textColor="@color/date_1" />
-                </TableRow>
-            </TableLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#20000000"/>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/contentPager"
+        <com.example.a12136.calendar.MySlidingDrawer
+            android:id="@+id/sildingDrawer"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#fffffe">
+            android:layout_height="250dp"
+            android:layout_alignBottom="@+id/viewpager"
+            android:content="@+id/lvv"
+            android:handle="@+id/handlerText"
+            android:orientation="vertical">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
+            <LinearLayout
+                android:id="@+id/handlerText"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_height="250dp"
                 android:background="#F7F7F7"
-                android:paddingStart="15dp"
-                android:paddingEnd="10dp"/>
+                android:orientation="vertical">
 
-            <SlidingDrawer
-                android:id="@+id/sildingDrawer"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:layout_alignBottom="@+id/viewpager"
-                android:content="@+id/contentText"
-                android:handle="@+id/handlerText"
+                <ImageView
+                    android:id="@+id/handle"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#30000000" />
+
+                <TextView
+                    android:id="@+id/main_sliding_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="17dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="17dp"
+                    android:text="今日日程安排"
+                    android:textColor="#90000000"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#20000000" />
+
+                <LinearLayout
+                    android:id="@+id/lvx"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ListView
+                        android:id="@+id/lv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FFFFFF" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lvv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fffffe"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/handlerText"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fffffe"
-                    android:minHeight="200dp"
-                    android:orientation="vertical">
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1px"
-                        android:background="#30000000"/>
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="50dip"
-                        android:gravity="center_vertical"
-                        android:paddingStart="5dip"
-                        android:paddingEnd="5dip"
-                        android:text="今日无日程安排"
-                        android:textColor="#90000000"
-                        android:textSize="16sp" />
+                        android:id="@+id/city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left"
+                        android:text="北京"
+                        android:textSize="24sp" />
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1px"
-                        android:background="#20000000"/>
+                    <ImageView
+                        android:id="@+id/w_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@mipmap/a_0" />
+
+                    <ImageView
+                        android:id="@+id/w_image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@mipmap/a_0"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:gravity="right"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/contentText"
-                    android:layout_width="fill_parent"
+                <LinearLayout
+                    android:id="@+id/l1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fffffe"/>
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/background"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
-            </SlidingDrawer>
-        </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/average_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#5C5D44"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/field_temperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#5C5D44"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#5C5D44"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/air"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#5C5D44"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/wind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#5C5D44"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.example.a12136.calendar.MySlidingDrawer>
+    </RelativeLayout>
+
 </LinearLayout>
